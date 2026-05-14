@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TravelEntity } from 'src/modules/travels/infrastructure/postgres/entities/travel.entities';
+import { VehicleEntity } from 'src/modules/vehicles/infrastructure/postgres/entities/vehicle.entities';
 
 @Module({
     imports:[TypeOrmModule.forRootAsync({
@@ -11,7 +12,7 @@ import { TravelEntity } from 'src/modules/travels/infrastructure/postgres/entiti
         useFactory: async (configService:ConfigService) => ({
           type: 'postgres',
           url: configService.get<string>('URL_DATABASE') || "Default Error URL",
-          entities:[TravelEntity],
+          entities:[TravelEntity,VehicleEntity],
           synchronize: true,
         }),
     })],
