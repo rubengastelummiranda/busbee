@@ -16,4 +16,12 @@ export class TravelDomainService implements TravelService {
     const repository = this.repository;
     return repository.findAll();
   }
+  async updateTravel(id: string, data: Partial<Travel>): Promise<TravelResponse | Error> {
+    const repository = this.repository;
+    return repository.update(id,data)
+  }
+  async deleteTravel(id: string): Promise< void | Error> {
+    const repository = this.repository;
+    return repository.delete(id);
+  }
 }

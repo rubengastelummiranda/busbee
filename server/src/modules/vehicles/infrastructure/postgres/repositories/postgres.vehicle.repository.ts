@@ -60,4 +60,24 @@ export class PostgresVehicleRepository implements VehicleRepository {
     const format = await this.vehicleEntityRepository.find();
     return this.toDomain(format);
   }
+
+  async edit(id: string, vehicle:Partial<Vehicle>): Promise<VehicleResponse | Error>{
+    await this.vehicleEntityRepository.update(id, vehicle);
+    const update = await this.vehicleEntityRepository.findOne({where:{id}});
+    if (!update){
+      throw new Error ("Vehiculo no encontrado")
+    }
+    return {
+      message: 'Vehículo actualizado exitosamente',
+      succes: true,
+      vehicle: update.toDomain(),
+    }
+  }
+  async delete(id: string): Promise<void | Error>{
+     const exist = await this.vehicleEntityRepository.findOne({where:{id}})
+     if(!exist){
+      throw new Error ('vehiculo no encontrado');
+     }
+     await this.vehicleEntityRepository.delete(id);
+  }
 }

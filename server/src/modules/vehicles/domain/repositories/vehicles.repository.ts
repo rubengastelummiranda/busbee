@@ -7,4 +7,8 @@ export interface VehicleRepository {
  
   findAll(): Promise<Vehicle[]>;
   
+  edit(id: string, vehicle: Partial<Vehicle>): Promise<VehicleResponse | Error>;
+
+  delete(id: string): Promise<void | Error>;
+  
 }

@@ -58,4 +58,23 @@ export class PostgresTravelRepository implements TravelRepository {
 
         return this.toDomain(format)
     }
+    async update(id: string, travel: Partial<Travel>): Promise<TravelResponse | Error> {
+        await this.travelEntityRepository.update(id,travel);
+        const update = await this.travelEntityRepository.findOne({where:{id}});
+        if(!update){
+            throw new Error ("Viaje no encontrado")
+        }
+        return {
+            message: 'Viaje actualizado exitosamente',
+            succes: true,
+            travel: update.toDomain(),
+        }
+    }
+    async delete(id:string): Promise<void | Error>{
+        const exist = await this.travelEntityRepository.findOne({where:{id}});
+        if(!exist){
+            throw new Error ('Viaje no encontrado.')
+        }
+        await this.travelEntityRepository.delete(id);
+    }
 }

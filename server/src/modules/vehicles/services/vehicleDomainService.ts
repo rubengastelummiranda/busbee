@@ -13,4 +13,11 @@ export class VehicleDomainService implements VehicleService {
   async listVehicles(): Promise<Vehicle[]> {
     return this.vehicleRepository.findAll();
   }
+
+  async editVehicles(id: string, data: Partial<Vehicle>): Promise<VehicleResponse | Error> {
+    return this.vehicleRepository.edit(id,data);  
+  }
+  async deleteVehicles(id: string): Promise<void | Error> {
+    return this.vehicleRepository.delete(id);
+  }
 }

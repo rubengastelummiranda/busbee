@@ -24,4 +24,23 @@ export class MockRepository implements TravelRepository {
   async findAll(): Promise<Travel[]> {
     return this.mockArray;
   }
+  async update(id: string, travel: Partial<Travel>): Promise<TravelResponse | Error> {
+    const index = this.mockArray.findIndex((t) => t.id === id);
+    if (index === -1) {
+      throw new Error('Viaje no encontrado.');
+    }
+    this.mockArray[index] = Travel.create({ ...this.mockArray[index], ...travel });
+    return {
+      message: 'viaje actualizado exitosamente',
+      succes: true,
+      travel: this.mockArray[index],
+    };
+  }
+  async delete(id: string): Promise<void | Error> {
+    const index = this.mockArray.findIndex((t) => t.id === id);
+    if (index === -1) {
+      throw new Error('Viaje no encontrado.');
+    }
+    this.mockArray.splice(index, 1);
+  }
 }
