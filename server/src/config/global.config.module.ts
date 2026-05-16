@@ -4,6 +4,9 @@ import {TypeOrmModule} from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TravelEntity } from 'src/modules/travels/infrastructure/postgres/entities/travel.entities';
 import { VehicleEntity } from 'src/modules/vehicles/infrastructure/postgres/entities/vehicle.entities';
+import { RouteEntity } from 'src/modules/routes/infrastructure/persistence/postgres/entities/Route.entity';
+import { RouteStopEntity } from 'src/modules/routes/infrastructure/persistence/postgres/entities/RouteStop.entity';
+import { ScheduleEntity } from 'src/modules/routes/infrastructure/persistence/postgres/entities/Schedule.entity';
 
 @Module({
     imports:[TypeOrmModule.forRootAsync({
@@ -12,7 +15,7 @@ import { VehicleEntity } from 'src/modules/vehicles/infrastructure/postgres/enti
         useFactory: async (configService:ConfigService) => ({
           type: 'postgres',
           url: configService.get<string>('URL_DATABASE') || "Default Error URL",
-          entities:[TravelEntity,VehicleEntity],
+          entities:[TravelEntity,VehicleEntity, RouteEntity, RouteStopEntity, ScheduleEntity],
           synchronize: true,
         }),
     })],
