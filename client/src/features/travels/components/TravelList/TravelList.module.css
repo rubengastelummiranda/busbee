@@ -1,0 +1,330 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  font-size: 40px;
+}
+
+.title {
+  font-family: var(--heading);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--text);
+  margin: 0;
+}
+
+.addBtn {
+  background: var(--bee-yellow) !important;
+  color: #08060d !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 0 var(--bee-yellow-dark) !important;
+  transition: all 0.15s ease;
+}
+
+.addBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--bee-yellow-dark) !important;
+}
+
+.addBtn:active {
+  transform: translateY(2px);
+  box-shadow: 0 0px 0 var(--bee-yellow-dark) !important;
+}
+
+.addBtnIcon {
+  margin-right: 4px;
+}
+
+.emptyCard {
+  text-align: center;
+  padding: 64px 32px;
+  max-width: 480px;
+  margin: 40px auto;
+  border: 1.5px dashed var(--border);
+  background: transparent;
+}
+
+.emptyIcon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.emptyCard h3 {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 8px;
+}
+
+.emptyCard p {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+
+.emptyAddBtn {
+  background: var(--bee-yellow) !important;
+  color: #08060d !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 0 var(--bee-yellow-dark) !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.travelCard {
+  border: 1.5px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg);
+}
+
+.travelCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(255, 185, 0, 0.08);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.statusBadge {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.scheduled {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+}
+
+.ongoing {
+  background: rgba(255, 185, 0, 0.1);
+  color: #d48200;
+}
+
+.completed {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.cancelled {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.routeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding: 8px 0;
+}
+
+.routePoint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.routeDot {
+  font-size: 16px;
+  margin-top: 2px;
+  user-select: none;
+}
+
+.routeText {
+  display: flex;
+  flex-direction: column;
+}
+
+.routeLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.routeName {
+  font-family: var(--heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.routeLine {
+  position: absolute;
+  left: 7px;
+  top: 22px;
+  bottom: 22px;
+  width: 2px;
+  background: var(--border);
+  border-left: 2px dashed var(--border);
+  z-index: 1;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+
+.detailItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.detailIcon {
+  font-size: 16px;
+  color: var(--text);
+}
+
+.detailText {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailLabel {
+  font-size: 11px;
+  color: var(--text);
+}
+
+.detailValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.noVehicle {
+  color: #ef4444;
+  font-style: italic;
+}
+
+.notesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--accent-bg);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+}
+
+.notesLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.notesText {
+  font-size: 13px;
+  color: var(--text-h);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.cardActions {
+  display: flex;
+  gap: 12px;
+}
+
+.editBtn,
+.deleteBtn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: var(--heading);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+
+.editBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-h);
+}
+
+.editBtn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.deleteBtn {
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.deleteBtn:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .addBtn {
+    width: 100%;
+  }
+  .details {
+    grid-template-columns: 1fr;
+  }
+}

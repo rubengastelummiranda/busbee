@@ -1,0 +1,245 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon {
+  font-size: 40px;
+}
+
+.title {
+  font-family: var(--heading);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0 0 4px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--text);
+  margin: 0;
+}
+
+.addBtn {
+  background: var(--bee-yellow) !important;
+  color: #08060d !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 0 var(--bee-yellow-dark) !important;
+  transition: all 0.15s ease;
+}
+
+.addBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--bee-yellow-dark) !important;
+}
+
+.addBtn:active {
+  transform: translateY(2px);
+  box-shadow: 0 0px 0 var(--bee-yellow-dark) !important;
+}
+
+.addBtnIcon {
+  margin-right: 4px;
+}
+
+.emptyCard {
+  text-align: center;
+  padding: 64px 32px;
+  max-width: 480px;
+  margin: 40px auto;
+  border: 1.5px dashed var(--border);
+  background: transparent;
+}
+
+.emptyIcon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.emptyCard h3 {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-h);
+  margin: 0 0 8px;
+}
+
+.emptyCard p {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+
+.emptyAddBtn {
+  background: var(--bee-yellow) !important;
+  color: #08060d !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 0 var(--bee-yellow-dark) !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.vehicleCard {
+  border: 1.5px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg);
+}
+
+.vehicleCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(255, 185, 0, 0.08);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.plateContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plateIcon {
+  font-size: 20px;
+}
+
+.plateNumber {
+  font-family: var(--heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.statusBadge {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.online {
+  background: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.idle {
+  background: rgba(234, 179, 8, 0.1);
+  color: #eab308;
+}
+
+.offline {
+  background: rgba(107, 99, 117, 0.1);
+  color: var(--text);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+
+.detailItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.detailLabel {
+  color: var(--text);
+}
+
+.detailValue {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.cardActions {
+  display: flex;
+  gap: 12px;
+}
+
+.editBtn,
+.deleteBtn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-family: var(--heading);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+
+.editBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-h);
+}
+
+.editBtn:hover {
+  background: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.deleteBtn {
+  background: transparent;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.deleteBtn:hover {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .addBtn {
+    width: 100%;
+  }
+}

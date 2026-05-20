@@ -1,0 +1,409 @@
+.pageLayout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  width: 100%;
+}
+
+.mainContent {
+  flex: 1;
+  margin-left: 260px;
+  padding: 40px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Welcome Banner */
+.welcomeBanner {
+  background: linear-gradient(135deg, #ffc229 0%, #ff9e00 100%);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 0 #cc8400;
+  border: 2px solid #08060d;
+  color: #08060d;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcomeInfo {
+  z-index: 2;
+  max-width: 70%;
+}
+
+.brandBadge {
+  background: rgba(8, 6, 13, 0.08);
+  border: 1px solid rgba(8, 6, 13, 0.15);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.welcomeTitle {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+  color: #08060d;
+}
+
+.welcomeSubtitle {
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.beeIllustration {
+  font-size: 72px;
+  user-select: none;
+  z-index: 2;
+  transform: rotate(-10deg);
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(-10deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-5deg);
+  }
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.statCard {
+  border: 1.5px solid var(--border);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.2s ease;
+  background: var(--bg);
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 6px 16px rgba(255, 185, 0, 0.05);
+}
+
+.statIconContainer {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statIcon {
+  font-size: 24px;
+}
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-h);
+  font-family: var(--heading);
+}
+
+/* Dashboard Section */
+.dashboardSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0;
+}
+
+.sectionLink {
+  font-size: 14px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.sectionLink:hover {
+  color: var(--bee-yellow-dark);
+}
+
+.sectionLoading {
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty Alert */
+.emptyAlert {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px;
+  border: 1.5px dashed var(--border);
+  background: transparent;
+}
+
+.emptyAlertIcon {
+  font-size: 32px;
+}
+
+.emptyAlert h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--text-h);
+}
+
+.emptyAlert p {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+
+.emptyAlertBtn {
+  margin-left: auto;
+  background: var(--bee-yellow) !important;
+  color: #08060d !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 0 var(--bee-yellow-dark) !important;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+}
+
+/* Upcoming List */
+.upcomingList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.upcomingCard {
+  border: 1.5px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: all 0.2s ease;
+  background: var(--bg);
+}
+
+.upcomingCard:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.upcomingTime {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.timeValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.upcomingPath {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  justify-content: center;
+}
+
+.pathPoint {
+  font-weight: 600;
+  color: var(--text-h);
+  font-size: 14px;
+}
+
+.pathArrow {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.upcomingBadge {
+  font-size: 13px;
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Action Cards */
+.actionCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.actionCard {
+  border: 1.5px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg);
+}
+
+.actionCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(255, 185, 0, 0.08);
+}
+
+.actionCardIcon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.actionCard h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-h);
+}
+
+.actionCard p {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0 0 12px;
+  flex: 1;
+}
+
+.actionCardBtn {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  transition: transform 0.2s ease;
+}
+
+.actionCard:hover .actionCardBtn {
+  transform: translateX(4px);
+  color: var(--bee-yellow-dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mainContent {
+    margin-left: 0;
+    padding: 24px 16px;
+    padding-top: 84px; /* 60px mobileBar + 24px spacing */
+  }
+
+  .welcomeBanner {
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .welcomeInfo {
+    max-width: 100%;
+  }
+
+  .welcomeTitle {
+    font-size: 28px;
+  }
+
+  .beeIllustration {
+    display: none;
+  }
+
+  .emptyAlert {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .emptyAlertBtn {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .upcomingCard {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .upcomingPath {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .pathArrow {
+    transform: rotate(90deg);
+    display: inline-block;
+  }
+}

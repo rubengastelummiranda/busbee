@@ -4,15 +4,40 @@
   --bg: #fff;
   --border: #e5e4e7;
   --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --accent: #ffb900;
+  --accent-bg: rgba(255, 185, 0, 0.1);
+  --accent-border: rgba(255, 185, 0, 0.5);
+  --bee-yellow: #ffb900;
+  --bee-yellow-dark: #cc9400;
+  --bee-yellow-light: #fff5d6;
+
+  /* DESIGN.md Tokens mapped to Amarillo Abeja Brand */
+  --color-duo-green: var(--bee-yellow);
+  --color-duo-green-light: var(--bee-yellow-light);
+  --color-sky-blue: #1cb0f6;
+  --color-sunshine-yellow: #ffc700;
+  --color-grape-soda: #a570ff;
+  --color-bubblegum-pink: #cc348d;
+  --color-snow-white: var(--bg);
+  --color-cloud-gray: var(--border);
+  --color-silver: #afafaf;
+  --color-graphite: #777777;
+  --color-charcoal: #4b4b4b;
+  --color-almost-black: var(--text-h);
+
+  --font-feather: 'feather', var(--heading);
+  --font-din-round: 'din-round', var(--sans);
+
+  --radius-cards: 12px;
+  --radius-inputs: 12px;
+  --radius-buttons: 12px;
+
   --social-bg: rgba(244, 243, 236, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: 'Outfit', system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -37,9 +62,12 @@
     --bg: #16171d;
     --border: #2e303a;
     --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+    --accent: #ffc229;
+    --accent-bg: rgba(255, 194, 41, 0.15);
+    --accent-border: rgba(255, 194, 41, 0.5);
+    --bee-yellow: #ffc229;
+    --bee-yellow-dark: #b37e00;
+    --bee-yellow-light: #3d3014;
     --social-bg: rgba(47, 48, 58, 0.5);
     --shadow:
       rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
@@ -51,11 +79,7 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  width: 100%;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
