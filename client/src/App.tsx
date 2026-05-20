@@ -4,8 +4,7 @@
     import LoginPage from './pages/LoginPage/LoginPage';                     
     import RegisterPage from './pages/RegisterPage/RegisterPage';            
     import AppDashboardPage from './pages/AppDashboardPage/AppDashboardPage';
-    import DriverDashboardPage from '.                                       
-  /pages/DriverDashboardPage/DriverDashboardPage';                           
+    import DriverDashboardPage from './pages/DriverDashboardPage/DriverDashboardPage';                           
     import VehiclesPage from './pages/VehiclesPage/VehiclesPage';            
     import TravelsPage from './pages/TravelsPage/TravelsPage';               
     import RoutesPage from './pages/RoutesPage/RoutesPage';                  
