@@ -56,14 +56,8 @@
 }
 
 .closeBtn:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-h);
-}
-
-@media (prefers-color-scheme: dark) {
-  .closeBtn:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
 }
 
 .form {

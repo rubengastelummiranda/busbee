@@ -251,9 +251,9 @@
   font-weight: var(--font-weight-bold);
   padding: 2px 8px;
   border-radius: var(--radius-xl);
-  background-color: #f2f2f2;
-  color: var(--color-charcoal);
-  border: 1px solid var(--color-cloud-gray);
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--text-h);
+  border: 1px solid var(--border);
   letter-spacing: 0.053em;
   text-transform: uppercase;
 }
@@ -263,10 +263,10 @@
   flex-direction: column;
   gap: var(--spacing-12);
   margin-bottom: var(--spacing-24);
-  background: #fafafa;
+  background: var(--code-bg);
   padding: var(--spacing-12);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--color-cloud-gray);
+  border: 1px solid var(--border);
 }
 
 .detailRow {
@@ -300,14 +300,14 @@
 
 .editBtn {
   flex: 1;
-  background-color: var(--color-snow-white);
-  border: 2px solid var(--color-cloud-gray);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--border);
   border-radius: var(--radius-buttons);
   padding: var(--spacing-8) var(--spacing-12);
   font-family: var(--font-din-round);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-bold);
-  color: var(--color-charcoal);
+  color: var(--text-h);
   cursor: pointer;
   transition: all 0.2s ease;
   letter-spacing: 0.053em;
@@ -320,17 +320,18 @@
 .editBtn:hover {
   border-color: var(--color-sky-blue);
   color: var(--color-sky-blue);
+  background-color: var(--accent-bg);
 }
 
 .deleteBtn {
-  background-color: var(--color-snow-white);
-  border: 2px solid var(--color-cloud-gray);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--border);
   border-radius: var(--radius-buttons);
   padding: var(--spacing-8) var(--spacing-12);
   font-family: var(--font-din-round);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-bold);
-  color: var(--color-charcoal);
+  color: var(--text-h);
   cursor: pointer;
   transition: all 0.2s ease;
   letter-spacing: 0.053em;
@@ -343,4 +344,23 @@
 .deleteBtn:hover {
   border-color: #ff4b4b;
   color: #ff4b4b;
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .searchBar {
+    width: 100%;
+    min-width: 100%;
+  }
+  .addBtn {
+    width: 100%;
+    justify-content: center;
+  }
 }

@@ -134,10 +134,10 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-8);
-  border: 2px solid var(--color-cloud-gray);
+  border: 2px solid var(--border);
   padding: 6px 12px;
   border-radius: var(--radius-inputs);
-  background: var(--color-snow-white);
+  background: rgba(25, 26, 35, 0.8);
 }
 
 .colorInput {
@@ -156,6 +156,8 @@
   width: 74px;
   outline: none;
   text-transform: uppercase;
+  background: transparent;
+  color: var(--text-h);
 }
 
 .iconSelection {
@@ -178,17 +180,18 @@
 
 .iconPresetBtn {
   font-size: 1.5rem;
-  background: #fafafa;
-  border: 2px solid var(--color-cloud-gray);
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--border);
   border-radius: var(--radius-xl);
   padding: var(--spacing-8);
   cursor: pointer;
   transition: all 0.2s ease;
+  color: var(--text-h);
 }
 
 .iconPresetBtn:hover {
   border-color: var(--color-sky-blue);
-  background-color: var(--color-snow-white);
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
 .selectedIcon {
@@ -197,13 +200,15 @@
 }
 
 .customIconInput {
-  border: 2px solid var(--color-cloud-gray);
+  border: 2px solid var(--border);
   border-radius: var(--radius-inputs);
   padding: var(--spacing-8);
   width: 60px;
   text-align: center;
   font-size: 1.2rem;
   outline: none;
+  background: rgba(25, 26, 35, 0.8);
+  color: var(--text-h);
 }
 
 .customIconInput:focus {
@@ -263,15 +268,15 @@
   padding: 6px 12px;
   border-radius: var(--radius-buttons);
   cursor: pointer;
-  background: white;
-  border: 2px solid var(--color-cloud-gray);
-  color: var(--color-charcoal);
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid var(--border);
+  color: var(--text-h);
   transition: all 0.2s ease;
   letter-spacing: 0.053em;
 }
 
 .mapBtn:hover {
-  background: #fafafa;
-  border-color: var(--color-silver);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-sky-blue);
 }
 

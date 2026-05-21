@@ -62,7 +62,12 @@ export const LandingPage: React.FC = () => {
       </main>
 
       <footer className={styles.footer}>
-        <p>&copy; {new Date().getFullYear()} BusBee Transit System. Todos los derechos reservados.</p>
+        <div className={styles.footerContent}>
+          <p className={styles.academicDisclaimer}>
+            Esta aplicación es desarrollada para presentarse en la edición 2026 del <strong>Inovatec</strong> del <strong>Instituto Tecnológico de Huatabampo</strong>, realizada en la materia <em>Taller de Investigación II</em> impartida por la docente <strong>Guadalupe María Barreras Álvarez</strong>.
+          </p>
+          <p className={styles.copyright}>&copy; {new Date().getFullYear()} BusBee Transit System. Todos los derechos reservados.</p>
+        </div>
       </footer>
     </div>
   );

@@ -29,22 +29,14 @@
 }
 
 .errorMessage {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  color: #ef4444;
+  background-color: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  color: #f87171;
   padding: 12px;
   border-radius: 8px;
   font-size: 14px;
   margin-bottom: 20px;
   text-align: left;
-}
-
-@media (prefers-color-scheme: dark) {
-  .errorMessage {
-    background-color: rgba(248, 113, 113, 0.1);
-    border: 1px solid rgba(248, 113, 113, 0.2);
-    color: #f87171;
-  }
 }
 
 .footer {

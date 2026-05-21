@@ -21,6 +21,15 @@ export const AppDashboardPage: React.FC = () => {
         <Button onClick={handleLogout} variant="secondary" className={styles.logoutBtn}>
           Cerrar Sesión
         </Button>
+        <div className={styles.academicNotice}>
+          <hr className={styles.divider} />
+          <p className={styles.academicTitle}>
+            Proyecto para <strong>Inovatec 2026</strong> - Instituto Tecnológico de Huatabampo
+          </p>
+          <p className={styles.academicSub}>
+            Taller de Investigación II | Docente: Guadalupe M. Barreras Alvarez
+          </p>
+        </div>
       </Card>
     </div>
   );

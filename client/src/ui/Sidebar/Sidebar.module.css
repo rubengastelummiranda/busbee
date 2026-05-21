@@ -161,3 +161,41 @@
     display: block;
   }
 }
+
+.academicNotice {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-family: 'Outfit', sans-serif;
+}
+
+.academicIcon {
+  font-size: 18px;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.academicTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 4px;
+}
+
+.academicText,
+.academicClass,
+.academicDocente {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 0 0 2px;
+  line-height: 1.3;
+}
+
+.academicDocente {
+  font-style: italic;
+  margin-top: 4px;
+  opacity: 0.8;
+}

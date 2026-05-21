@@ -59,6 +59,13 @@ export const Sidebar: React.FC = () => {
         </nav>
 
         <div className={styles.footer}>
+          <div className={styles.academicNotice}>
+            <span className={styles.academicIcon}>🎓</span>
+            <p className={styles.academicTitle}>Proyecto Inovatec 2026</p>
+            <p className={styles.academicText}>Inst. Tecnológico de Huatabampo</p>
+            <p className={styles.academicClass}>Taller de Investigación II</p>
+            <p className={styles.academicDocente}>Docente: Guadalupe M. Barreras Alvarez</p>
+          </div>
           <button onClick={handleLogout} className={styles.logoutBtn}>
             <span className={styles.logoutIcon}>🚪</span>
             <span className={styles.logoutLabel}>Cerrar Sesión</span>
