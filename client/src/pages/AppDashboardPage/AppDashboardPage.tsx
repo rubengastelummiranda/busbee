@@ -13,6 +13,7 @@ export const AppDashboardPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchAllRoutes = async () => {
@@ -61,8 +62,24 @@ export const AppDashboardPage: React.FC = () => {
 
   return (
     <div className={styles.appLayout}>
+      {/* Menu Hamburguesa para Móvil */}
+      <button
+        className={`${styles.menuToggle} ${isSidebarOpen ? styles.menuToggleOpen : ''}`}
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        aria-label="Toggle navigation menu"
+      >
+        <span className={styles.hamburgerLine}></span>
+        <span className={styles.hamburgerLine}></span>
+        <span className={styles.hamburgerLine}></span>
+      </button>
+
+      {/* Backdrop Layer */}
+      {isSidebarOpen && (
+        <div className={styles.backdrop} onClick={() => setIsSidebarOpen(false)} />
+      )}
+
       {/* Sidebar Panel */}
-      <aside className={styles.sidebar}>
+      <aside className={`${styles.sidebar} ${isSidebarOpen ? styles.sidebarOpen : ''}`}>
         <div className={styles.brandHeader}>
           <div className={styles.logoGroup}>
             <span className={styles.logoIcon}>🐝</span>
@@ -111,7 +128,10 @@ export const AppDashboardPage: React.FC = () => {
                   <div
                     key={route.id}
                     className={`${styles.routeListItem} ${isSelected ? styles.selectedItem : ''}`}
-                    onClick={() => setSelectedRoute(route)}
+                    onClick={() => {
+                      setSelectedRoute(route);
+                      setIsSidebarOpen(false); // Close sidebar drawer on mobile
+                    }}
                     style={{ borderLeftColor: route.color || '#58CC02' }}
                   >
                     <div className={styles.routeItemHeader}>

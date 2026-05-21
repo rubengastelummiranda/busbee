@@ -439,21 +439,154 @@
   line-height: 1.6;
 }
 
+/* Menu Hamburguesa */
+.menuToggle {
+  display: none;
+}
+
+.backdrop {
+  display: none;
+}
+
 /* Responsive layout shifts */
 @media (max-width: 1024px) {
-  .appLayout {
+  .menuToggle {
+    display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    width: 48px;
+    height: 48px;
+    padding: 14px;
+    background: rgba(30, 30, 30, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .menuToggle:hover {
+    background: rgba(40, 40, 40, 0.85);
+    transform: scale(1.05);
+  }
+
+  .hamburgerLine {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .menuToggleOpen .hamburgerLine:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .menuToggleOpen .hamburgerLine:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menuToggleOpen .hamburgerLine:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   .sidebar {
-    width: 100%;
-    min-width: unset;
-    height: 380px;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 320px;
+    max-width: 85vw;
+    z-index: 1000;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.5);
+  }
+
+  .brandHeader {
+    padding-left: 76px; /* Make space for the hamburger button floating on top */
   }
 
   .mainContent {
-    height: calc(100vh - 380px);
+    width: 100%;
+    height: 100%;
+  }
+
+  .detailsSplit {
+    padding: 16px;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detailsSplit {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .metricsGrid {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .metricItem {
+    padding: 8px;
+  }
+
+  .metricValue {
+    font-size: 13px;
+  }
+
+  .metaCard {
+    padding: 14px;
+  }
+
+  .metaHeader {
+    margin-bottom: 12px;
+    gap: 10px;
+  }
+
+  .metaIcon {
+    font-size: 28px;
+  }
+
+  .metaTitle {
+    font-size: 18px;
+  }
+
+  .routeInstructions {
+    display: none; /* Hide instructions on mobile to save vertical space for the map */
   }
 }

@@ -102,3 +102,24 @@
   font-size: 11px;
   color: #666666;
 }
+
+@media (max-width: 1024px) {
+  .routeHeaderOverlay {
+    left: 76px; /* Make space for hamburger button */
+    padding: 8px 12px;
+    top: 16px;
+  }
+  
+  .badge {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .routeDetailsText h4 {
+    font-size: 14px;
+  }
+
+  .routeDetailsText p {
+    font-size: 10px;
+  }
+}

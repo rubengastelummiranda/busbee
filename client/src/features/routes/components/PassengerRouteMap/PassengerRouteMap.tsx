@@ -18,10 +18,25 @@ export const PassengerRouteMap: React.FC<PassengerRouteMapProps> = ({ route }) =
   const markersRef = useRef<mapboxgl.Marker[]>([]);
   const [mapLoaded, setMapLoaded] = useState(false);
 
-  // Decode the polyline to get coordinates array
+  // Decode coordinates, using route.coordinates first, then route.polyline as fallback
   const coordinates = React.useMemo(() => {
+    if (route.coordinates && Array.isArray(route.coordinates) && route.coordinates.length > 0) {
+      return route.coordinates.map((c: any) => {
+        if (Array.isArray(c)) {
+          const lng = typeof c[0] === 'number' ? c[0] : 0;
+          const lat = typeof c[1] === 'number' ? c[1] : 0;
+          return { lat, lng };
+        }
+        if (c && typeof c === 'object') {
+          const lat = typeof c.lat === 'number' ? c.lat : (typeof c.latitude === 'number' ? c.latitude : 0);
+          const lng = typeof c.lng === 'number' ? c.lng : (typeof c.longitude === 'number' ? c.longitude : (typeof c.lon === 'number' ? c.lon : 0));
+          return { lat, lng };
+        }
+        return { lat: 0, lng: 0 };
+      }).filter(c => c.lat !== 0 || c.lng !== 0);
+    }
     return route.polyline ? decodePolyline(route.polyline) : [];
-  }, [route.polyline]);
+  }, [route.coordinates, route.polyline]);
 
   // Initialize Mapbox GL map
   useEffect(() => {
@@ -33,7 +48,7 @@ export const PassengerRouteMap: React.FC<PassengerRouteMapProps> = ({ route }) =
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/navigation-dark-v14', // Sleek premium dark map styling
+      style: 'mapbox://styles/mapbox/dark-v11', // Sleek premium dark map styling
       center: [centerLng, centerLat],
       zoom: 13,
     });
