@@ -42,7 +42,15 @@ export const PassengerRouteMap: React.FC<PassengerRouteMapProps> = ({ route, act
   }, [route.coordinates, route.polyline]);
 
   const currentRouteBuses = React.useMemo(() => {
-    return activeBuses.filter((bus) => bus.routeId === route.id);
+    console.log('[PassengerRouteMap] Active buses in fleet:', activeBuses);
+    console.log('[PassengerRouteMap] Current route ID:', route.id);
+    const matched = activeBuses.filter((bus) => {
+      const match = String(bus.routeId).trim().toLowerCase() === String(route.id).trim().toLowerCase();
+      console.log(`[PassengerRouteMap] Comparing bus routeId "${bus.routeId}" with current routeId "${route.id}": Match = ${match}`);
+      return match;
+    });
+    console.log('[PassengerRouteMap] Matched buses for this route:', matched);
+    return matched;
   }, [activeBuses, route.id]);
 
   // Manage active bus markers on the map

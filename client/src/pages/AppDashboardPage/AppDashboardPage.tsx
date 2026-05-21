@@ -17,6 +17,46 @@ export const AppDashboardPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeBuses, setActiveBuses] = useState<ActiveBus[]>([]);
+  const [socketStatus, setSocketStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>('connecting');
+  const [socketError, setSocketError] = useState<string | null>(null);
+
+  const getBadgeStyle = () => {
+    switch (socketStatus) {
+      case 'connected':
+        return {
+          color: '#58CC02',
+          backgroundColor: 'rgba(88, 204, 2, 0.1)',
+          borderColor: 'rgba(88, 204, 2, 0.2)',
+        };
+      case 'connecting':
+        return {
+          color: '#eab308',
+          backgroundColor: 'rgba(234, 179, 8, 0.1)',
+          borderColor: 'rgba(234, 179, 8, 0.2)',
+        };
+      case 'disconnected':
+      case 'error':
+      default:
+        return {
+          color: '#ef4444',
+          backgroundColor: 'rgba(239, 68, 68, 0.1)',
+          borderColor: 'rgba(239, 68, 68, 0.2)',
+        };
+    }
+  };
+
+  const getDotStyle = () => {
+    switch (socketStatus) {
+      case 'connected':
+        return { backgroundColor: '#58CC02' };
+      case 'connecting':
+        return { backgroundColor: '#eab308' };
+      case 'disconnected':
+      case 'error':
+      default:
+        return { backgroundColor: '#ef4444' };
+    }
+  };
 
   useEffect(() => {
     const fetchAllRoutes = async () => {
@@ -39,12 +79,25 @@ export const AppDashboardPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    locationService.connect((locations) => {
-      setActiveBuses(locations);
+    const unsubscribe = locationService.subscribe({
+      onLocationsUpdate: (locations) => {
+        setActiveBuses(locations);
+      },
+      onConnect: () => {
+        setSocketStatus('connected');
+        setSocketError(null);
+      },
+      onDisconnect: () => {
+        setSocketStatus('disconnected');
+      },
+      onConnectError: (err) => {
+        setSocketStatus('error');
+        setSocketError(`Error de conexión al servidor de rastreo: ${err.message || 'Error desconocido'}`);
+      },
     });
 
     return () => {
-      locationService.disconnect();
+      unsubscribe();
     };
   }, []);
 
@@ -101,9 +154,15 @@ export const AppDashboardPage: React.FC = () => {
               <p className={styles.logoTagline}>Consola de Pasajero</p>
             </div>
           </div>
-          <div className={styles.liveBadge}>
-            <span className={styles.liveDot}></span>
-            <span>Seguimiento Activo</span>
+          <div className={styles.liveBadge} style={getBadgeStyle()}>
+            <span className={styles.liveDot} style={getDotStyle()}></span>
+            <span>
+              {socketStatus === 'connected'
+                ? 'Seguimiento Activo'
+                : socketStatus === 'connecting'
+                ? 'Conectando...'
+                : 'Sin Conexión'}
+            </span>
           </div>
         </div>
 
@@ -123,6 +182,12 @@ export const AppDashboardPage: React.FC = () => {
         {error && (
           <div className={styles.errorAlert}>
             <span>⚠️</span> {error}
+          </div>
+        )}
+
+        {socketError && (
+          <div className={styles.errorAlert}>
+            <span>⚠️</span> {socketError}
           </div>
         )}
 

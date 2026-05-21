@@ -27,6 +27,8 @@ export const DriverDashboardPage: React.FC = () => {
   const [watchId, setWatchId] = useState<number | null>(null);
   const [currentCoordinates, setCurrentCoordinates] = useState<{ lat: number; lng: number } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [socketStatus, setSocketStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>('disconnected');
+  const unsubscribeRef = React.useRef<(() => void) | null>(null);
 
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -70,6 +72,10 @@ export const DriverDashboardPage: React.FC = () => {
       if (watchId !== null) {
         navigator.geolocation.clearWatch(watchId);
       }
+      if (unsubscribeRef.current) {
+        unsubscribeRef.current();
+        unsubscribeRef.current = null;
+      }
       locationService.disconnect();
     };
   }, [watchId]);
@@ -80,9 +86,14 @@ export const DriverDashboardPage: React.FC = () => {
         navigator.geolocation.clearWatch(watchId);
         setWatchId(null);
       }
+      if (unsubscribeRef.current) {
+        unsubscribeRef.current();
+        unsubscribeRef.current = null;
+      }
       locationService.goOffline(driverId);
       locationService.disconnect();
       setIsOnline(false);
+      setSocketStatus('disconnected');
       setCurrentCoordinates(null);
     } else {
       if (!selectedRouteId || !selectedVehicleId) {
@@ -96,9 +107,22 @@ export const DriverDashboardPage: React.FC = () => {
         return;
       }
 
-      locationService.connect((locations) => {
-        console.log('Active locations in fleet:', locations);
+      setSocketStatus('connecting');
+
+      const unsubscribe = locationService.subscribe({
+        onConnect: () => {
+          setSocketStatus('connected');
+          setErrorMsg(null);
+        },
+        onDisconnect: () => {
+          setSocketStatus('disconnected');
+        },
+        onConnectError: (err) => {
+          setSocketStatus('error');
+          setErrorMsg(`Error de conexión al servidor WebSocket: ${err.message || 'Error desconocido'}`);
+        }
       });
+      unsubscribeRef.current = unsubscribe;
 
       const id = navigator.geolocation.watchPosition(
         (position) => {
@@ -115,17 +139,33 @@ export const DriverDashboardPage: React.FC = () => {
         (error) => {
           console.error('Error getting location:', error);
           let msg = 'Error al obtener la ubicación.';
+          let shouldDisconnect = false;
+
           if (error.code === error.PERMISSION_DENIED) {
             msg = 'Permiso denegado para obtener la ubicación.';
+            shouldDisconnect = true;
+          } else if (error.code === error.TIMEOUT) {
+            msg = 'La señal GPS tardó demasiado en responder (Timeout). Buscando señal...';
+          } else if (error.code === error.POSITION_UNAVAILABLE) {
+            msg = 'Señal GPS no disponible temporalmente. Intentando reconectar...';
           }
+
           setErrorMsg(msg);
-          setIsOnline(false);
-          if (watchId !== null) {
-            navigator.geolocation.clearWatch(watchId);
-            setWatchId(null);
+
+          if (shouldDisconnect) {
+            setIsOnline(false);
+            if (watchId !== null) {
+              navigator.geolocation.clearWatch(watchId);
+              setWatchId(null);
+            }
+            if (unsubscribeRef.current) {
+              unsubscribeRef.current();
+              unsubscribeRef.current = null;
+            }
+            locationService.goOffline(driverId);
+            locationService.disconnect();
+            setSocketStatus('disconnected');
           }
-          locationService.goOffline(driverId);
-          locationService.disconnect();
         },
         {
           enableHighAccuracy: true,
@@ -240,16 +280,30 @@ export const DriverDashboardPage: React.FC = () => {
             </div>
           )}
 
-          {isOnline && currentCoordinates && (
+          {isOnline && (
             <div className={styles.trackerDetails}>
               <span>
                 <strong>Conductor:</strong> {driverName}
               </span>
               <span>
-                <strong>Coordenadas:</strong> {currentCoordinates.lat.toFixed(6)}, {currentCoordinates.lng.toFixed(6)}
+                <strong>Señal GPS:</strong>{' '}
+                {currentCoordinates ? (
+                  `📍 ${currentCoordinates.lat.toFixed(6)}, ${currentCoordinates.lng.toFixed(6)}`
+                ) : (
+                  <span style={{ color: '#eab308' }}>⌛ Buscando ubicación GPS...</span>
+                )}
               </span>
               <span>
-                <strong>Estado:</strong> Reportando ubicación cada 10s
+                <strong>Servidor:</strong>{' '}
+                {socketStatus === 'connected' ? (
+                  <span style={{ color: '#22c55e', fontWeight: 'bold' }}>● Conectado</span>
+                ) : socketStatus === 'connecting' ? (
+                  <span style={{ color: '#eab308', fontWeight: 'bold' }}>● Conectando...</span>
+                ) : socketStatus === 'error' ? (
+                  <span style={{ color: '#ef4444', fontWeight: 'bold' }}>● Error de conexión</span>
+                ) : (
+                  <span style={{ color: '#a3a3a3', fontWeight: 'bold' }}>● Desconectado</span>
+                )}
               </span>
             </div>
           )}
