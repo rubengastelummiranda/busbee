@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="#1f212a" />
+      <stop offset="100%" stop-color="#111217" />
+    </radialGradient>
+
+    <!-- Bee Body Yellow Gradient -->
+    <linearGradient id="beeYellow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe47e" />
+      <stop offset="50%" stop-color="#ffb900" />
+      <stop offset="100%" stop-color="#e09e00" />
+    </linearGradient>
+
+    <!-- Bee Body Dark Charcoal Gradient -->
+    <linearGradient id="beeCharcoal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a4b53" />
+      <stop offset="100%" stop-color="#1c1d22" />
+    </linearGradient>
+
+    <!-- Wing Gradient -->
+    <linearGradient id="wingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#9bdfff" />
+    </linearGradient>
+
+    <!-- Wing Highlight -->
+    <linearGradient id="wingHighlight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Shadow Filter for depth -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container (App Icon Background) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Outer Neon Bee-Yellow Glow Ring -->
+  <rect x="20" y="20" width="472" height="472" rx="92" fill="none" stroke="#ffb900" stroke-width="6" opacity="0.3" />
+  <rect x="26" y="26" width="460" height="460" rx="86" fill="none" stroke="#ffb900" stroke-width="2" opacity="0.6" />
+
+  <!-- Stylized Transit Routes in Background -->
+  <g opacity="0.15">
+    <path d="M 80 180 L 160 180 A 40 40 0 0 1 200 220 L 200 360 A 40 40 0 0 0 240 400 L 400 400" fill="none" stroke="#ffb900" stroke-width="8" stroke-linecap="round" />
+    <circle cx="80" cy="180" r="10" fill="#ffb900" />
+    <circle cx="400" cy="400" r="10" fill="#ffb900" />
+    
+    <path d="M 120 400 L 120 300 A 30 30 0 0 1 150 270 L 320 270 A 30 30 0 0 0 350 240 L 350 120" fill="none" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" stroke-dasharray="12 12" />
+    <circle cx="120" cy="400" r="8" fill="#38bdf8" />
+    <circle cx="350" cy="120" r="8" fill="#38bdf8" />
+  </g>
+
+  <!-- MAIN BUS-BEE CHARACTER GROUP (with depth shadow) -->
+  <g filter="url(#dropShadow)">
+    <!-- Master Translation and Tilt to flying position -->
+    <g transform="translate(256, 260) rotate(-15)">
+      
+      <!-- 1. Stinger (Acuijón) - Sleek triangular rear spoiler/stinger -->
+      <path d="M -135 0 L -170 -12 L -160 0 L -170 12 Z" fill="url(#beeCharcoal)" stroke="#111217" stroke-width="2" stroke-linejoin="round" />
+      
+      <!-- 2. Wheels / Thruster pods (Underbody) -->
+      <!-- Back Wheel / Thruster -->
+      <rect x="-70" y="52" width="36" height="18" rx="8" fill="url(#beeCharcoal)" stroke="#ffb900" stroke-width="2" />
+      <circle cx="-52" cy="61" r="5" fill="#ffb900" />
+      <!-- Front Wheel / Thruster -->
+      <rect x="20" y="52" width="36" height="18" rx="8" fill="url(#beeCharcoal)" stroke="#ffb900" stroke-width="2" />
+      <circle cx="38" cy="61" r="5" fill="#ffb900" />
+
+      <!-- 3. Bee/Bus Main Body -->
+      <!-- Smooth capsule base -->
+      <rect x="-130" y="-60" width="260" height="120" rx="60" fill="url(#beeYellow)" stroke="#cc9400" stroke-width="4" />
+      
+      <!-- Charcoal Stripes (resembling stylized bus panels) -->
+      <!-- Rear stripe -->
+      <path d="M -80 -58 A 60 60 0 0 1 -40 -30 L -40 30 A 60 60 0 0 1 -80 58 A 60 60 0 0 0 -80 -58 Z" fill="url(#beeCharcoal)" />
+      <!-- Middle stripe -->
+      <path d="M -20 -60 A 60 60 0 0 1 20 -30 L 20 30 A 60 60 0 0 1 -20 60 A 60 60 0 0 0 -20 -60 Z" fill="url(#beeCharcoal)" />
+      
+      <!-- 4. Front Windshield (Sleek aerodynamic bus cockpit) -->
+      <path d="M 65 -45 C 95 -35 125 -10 125 0 C 125 10 95 35 65 45 Z" fill="#111217" stroke="#ffb900" stroke-width="3" />
+      <!-- Windshield glass highlight -->
+      <path d="M 85 -30 C 105 -20 115 -5 115 0 C 115 5 105 20 85 30" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round" opacity="0.8" />
+      <path d="M 95 -15 C 105 -8 108 0 108 0" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+
+      <!-- 5. Bus Windows (Light blue glowing rectangular windows with rounded corners) -->
+      <!-- Window 1 (Passenger window) -->
+      <rect x="-10" y="-22" width="40" height="34" rx="8" fill="#1f212a" stroke="#38bdf8" stroke-width="3" />
+      <path d="M -10 -22 L 30 12" stroke="#38bdf8" stroke-width="1.5" opacity="0.5" />
+      <!-- Window 2 (Passenger window) -->
+      <rect x="-70" y="-22" width="40" height="34" rx="8" fill="#1f212a" stroke="#38bdf8" stroke-width="3" />
+      <path d="M -70 -22 L -30 12" stroke="#38bdf8" stroke-width="1.5" opacity="0.5" />
+
+      <!-- 6. Antennae (Las antenas de la abeja, functioning as Wi-Fi/GPS routing receivers) -->
+      <!-- Left/Top Antenna -->
+      <path d="M 105 -22 Q 140 -45 130 -75" fill="none" stroke="url(#beeCharcoal)" stroke-width="7" stroke-linecap="round" />
+      <circle cx="130" cy="-75" r="12" fill="#ffb900" stroke="#111217" stroke-width="2" />
+      <circle cx="130" cy="-75" r="5" fill="#ffffff" />
+      <!-- Right/Bottom Antenna -->
+      <path d="M 110 18 Q 150 35 155 65" fill="none" stroke="url(#beeCharcoal)" stroke-width="7" stroke-linecap="round" />
+      <circle cx="155" cy="65" r="12" fill="#ffb900" stroke="#111217" stroke-width="2" />
+      <circle cx="155" cy="65" r="5" fill="#ffffff" />
+
+      <!-- 7. Glowing Wings (Double overlapping translucent wings on top) -->
+      <g transform="translate(-15, -54)">
+        <!-- Back/Smaller Wing -->
+        <path d="M -30 0 C -70 -90 -15 -130 15 -70 C 35 -30 20 0 -30 0 Z" fill="url(#wingGrad)" opacity="0.75" stroke="#ffffff" stroke-width="3" />
+        <path d="M -30 0 C -70 -90 -15 -130 15 -70" fill="url(#wingHighlight)" opacity="0.5" />
+        
+        <!-- Front/Larger Wing -->
+        <path d="M 10 0 C 40 -110 100 -90 50 -35 C 30 -10 10 0 10 0 Z" fill="url(#wingGrad)" opacity="0.88" stroke="#ffffff" stroke-width="4" />
+        <path d="M 10 0 C 40 -110 100 -90 50 -35" fill="url(#wingHighlight)" opacity="0.7" />
+        <!-- Wing rib details -->
+        <path d="M 28 -40 Q 42 -75 58 -88" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" opacity="0.6" />
+        <path d="M 28 -40 Q 55 -60 70 -52" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.5" />
+      </g>
+
+      <!-- 8. Cheek Blush / Speed Lines (Subtle premium styling) -->
+      <!-- Small orange speed line at back -->
+      <path d="M -145 -20 L -132 -20" fill="none" stroke="#ffb900" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+      <path d="M -148 0 L -135 0" fill="none" stroke="#ffb900" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+      <path d="M -145 20 L -132 20" fill="none" stroke="#ffb900" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+    </g>
+  </g>
+</svg>
