@@ -7,7 +7,7 @@
     import DriverDashboardPage from './pages/DriverDashboardPage/DriverDashboardPage';                           
     import VehiclesPage from './pages/VehiclesPage/VehiclesPage';            
     import TravelsPage from './pages/TravelsPage/TravelsPage';               
-    import RoutesPage from './pages/RoutesPage/RoutesPage';                  
+    import RoutesPage from './pages/RoutesPage/RoutesPage';
                                                                              
     const routes = [                                                         
       { path: '/', component: LandingPage },                                 

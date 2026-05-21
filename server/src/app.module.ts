@@ -4,9 +4,10 @@ import { VehiclesModule } from './modules/vehicles/vehicles.module';
 import { GlobalConfigModule } from './config/global.config.module';
 import { ConfigModule } from '@nestjs/config';
 import { RoutesModule } from './modules/routes/routes.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
-  imports: [TravelsModule,RoutesModule,  VehiclesModule, GlobalConfigModule,ConfigModule.forRoot({isGlobal:true})],
+  imports: [TravelsModule,RoutesModule,  VehiclesModule, GlobalConfigModule,ConfigModule.forRoot({isGlobal:true}), AuthModule],
   controllers: [],
   providers: [],
 })

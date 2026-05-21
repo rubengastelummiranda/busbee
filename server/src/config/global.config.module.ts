@@ -7,6 +7,7 @@ import { VehicleEntity } from 'src/modules/vehicles/infrastructure/postgres/enti
 import { RouteEntity } from 'src/modules/routes/infrastructure/persistence/postgres/entities/Route.entity';
 import { RouteStopEntity } from 'src/modules/routes/infrastructure/persistence/postgres/entities/RouteStop.entity';
 import { ScheduleEntity } from 'src/modules/routes/infrastructure/persistence/postgres/entities/Schedule.entity';
+import { UserEntity } from 'src/modules/auth/infrastructure/postgres/entities/user.entities';
 
 @Module({
     imports:[TypeOrmModule.forRootAsync({
@@ -15,7 +16,7 @@ import { ScheduleEntity } from 'src/modules/routes/infrastructure/persistence/po
         useFactory: async (configService:ConfigService) => ({
           type: 'postgres',
           url: configService.get<string>('URL_DATABASE') || "Default Error URL",
-          entities:[TravelEntity,VehicleEntity, RouteEntity, RouteStopEntity, ScheduleEntity],
+          entities:[TravelEntity,VehicleEntity, RouteEntity, RouteStopEntity, ScheduleEntity, UserEntity],
           synchronize: true,
         }),
     })],

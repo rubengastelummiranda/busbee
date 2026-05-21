@@ -13,6 +13,7 @@ export const Sidebar: React.FC = () => {
   const navItems = [
     { path: '/driving', label: 'Inicio', icon: '🏠' },
     { path: '/driving/vehicles', label: 'Vehículos', icon: '🚌' },
+    { path: '/driving/routes', label: 'Rutas', icon: '🗺️' },
     { path: '/driving/travels', label: 'Viajes', icon: '🛣️' },
   ];
 
