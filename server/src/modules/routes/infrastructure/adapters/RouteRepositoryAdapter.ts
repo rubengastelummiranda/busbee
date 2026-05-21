@@ -35,9 +35,7 @@ export class RouteRepositoryAdapter implements RouteRepository {
   }
 
   async findAll(): Promise<Route[]> {
-    const routeEntities = await this.routeRepository.find({
-      relations: ['stops'],
-    });
+    const routeEntities = await this.routeRepository.find();
     return routeEntities.map((routeEntity) => this.toDomain(routeEntity));
   }
 
