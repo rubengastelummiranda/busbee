@@ -2,8 +2,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   display: flex;
@@ -68,8 +68,78 @@
 }
 
 @media (max-width: 500px) {
+  .modalOverlay {
+    padding: var(--spacing-8);
+  }
+  .formCard {
+    padding: var(--spacing-12);
+    max-height: 96vh;
+  }
+  .header {
+    margin-bottom: var(--spacing-12);
+    padding-bottom: var(--spacing-8);
+  }
+  .title {
+    font-size: 1.15rem;
+  }
+  .form {
+    gap: var(--spacing-12);
+  }
   .formRow {
     grid-template-columns: 1fr;
+    gap: var(--spacing-12);
+  }
+  .presetBtn {
+    width: 28px;
+    height: 28px;
+  }
+  .selectedPreset::after {
+    font-size: 9px;
+  }
+  .iconPresetBtn {
+    font-size: 1.1rem;
+    padding: var(--spacing-6);
+  }
+  .customIconInput {
+    padding: var(--spacing-6);
+    font-size: 1rem;
+    width: 50px;
+  }
+  .presetsGrid {
+    justify-content: flex-start;
+    gap: var(--spacing-6);
+  }
+  .colorRow {
+    gap: var(--spacing-8);
+  }
+  .iconPresets {
+    gap: var(--spacing-6);
+  }
+  .mapWrapper {
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+  }
+  .mapContainer {
+    height: 180px;
+  }
+  .actions {
+    flex-direction: column-reverse;
+    gap: var(--spacing-8);
+    margin-top: var(--spacing-8);
+    padding-top: var(--spacing-12);
+  }
+  .cancelBtn, .submitBtn {
+    width: 100%;
+    height: 42px;
+  }
+  .mapControls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-8);
+  }
+  .mapBtn {
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -89,6 +159,7 @@
 
 .colorRow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--spacing-12);
 }
@@ -175,6 +246,7 @@
 
 .iconPresets {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-12);
 }
 

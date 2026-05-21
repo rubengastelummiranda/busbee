@@ -44,3 +44,18 @@
   color: #f87171;
   margin-top: 5px;
 }
+
+@media (max-width: 500px) {
+  .container {
+    margin-bottom: 12px;
+  }
+  .label {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
