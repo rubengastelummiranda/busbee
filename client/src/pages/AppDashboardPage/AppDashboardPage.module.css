@@ -1,72 +1,459 @@
-.container {
+.appLayout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar panel */
+.sidebar {
+  width: 380px;
+  min-width: 380px;
+  background-color: #181818;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.brandHeader {
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logoGroup {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 24px;
+  gap: 12px;
+}
+
+.logoIcon {
+  font-size: 32px;
+}
+
+.logoText {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.logoTagline {
+  margin: 0;
+  font-size: 12px;
+  color: #58CC02;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.searchSection {
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.searchInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px 12px 10px 38px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
   box-sizing: border-box;
 }
 
-.dashboardCard {
-  max-width: 500px;
-  width: 100%;
+.searchInput:focus {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: #58CC02;
+  box-shadow: 0 0 0 2px rgba(88, 204, 2, 0.2);
+}
+
+.errorAlert {
+  margin: 12px 24px;
+  padding: 10px 14px;
+  background-color: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #f87171;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.routesListWrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 24px;
+}
+
+/* Custom Scrollbar for Routes List */
+.routesListWrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.routesListWrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.routesListWrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.routesListWrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.loadingSpinnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  gap: 12px;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #58CC02;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.noRoutesMessage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  height: 100%;
+  color: rgba(255, 255, 255, 0.4);
 }
 
-.icon {
-  font-size: 48px;
-  display: block;
-  margin-bottom: 16px;
+.noRoutesIcon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  opacity: 0.6;
 }
 
-.title {
-  font-size: 32px;
+.routesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.routeListItem {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left-width: 4px;
+  border-left-style: solid;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.routeListItem:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.selectedItem {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.routeItemHeader {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.routeItemIcon {
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+}
+
+.routeItemInfo {
+  flex: 1;
+}
+
+.codeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2px;
+}
+
+.routeItemCode {
+  font-family: 'Outfit', sans-serif;
   font-weight: 700;
-  margin: 0 0 8px;
+  font-size: 13px;
+  text-transform: uppercase;
 }
 
-.subtitle {
-  font-size: 18px;
-  color: var(--accent);
+.routeItemType {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
   font-weight: 500;
+}
+
+.routeItemName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.routeItemMeta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.footerSection {
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.academicBox {
   margin-bottom: 16px;
 }
 
-.text {
-  font-size: 15px;
-  color: var(--text);
-  line-height: 1.5;
-  margin-bottom: 32px;
+.academicTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 2px;
+}
+
+.academicDetail {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
 }
 
 .logoutBtn {
   width: 100%;
-  max-width: 200px;
-  margin: 0 auto;
 }
 
-.academicNotice {
-  margin-top: 32px;
-  font-family: 'Outfit', sans-serif;
+/* Main map & details display area */
+.mainContent {
+  flex: 1;
+  height: 100%;
+  background-color: #121212;
+  display: flex;
+  flex-direction: column;
 }
 
-.divider {
-  border: 0;
-  border-top: 1px solid var(--border);
+.detailsSplit {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.mapArea {
+  flex: 1;
+  min-height: 0; /* Important for flex child sizing */
+}
+
+.metaArea {
+  height: auto;
+}
+
+.metaCard {
+  background-color: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.metaHeader {
+  display: flex;
+  gap: 16px;
   margin-bottom: 20px;
 }
 
-.academicTitle {
-  font-size: 13px;
-  color: var(--text-h);
-  line-height: 1.5;
-  margin: 0 0 6px;
-  font-weight: 500;
+.metaIcon {
+  font-size: 36px;
+  display: flex;
+  align-items: center;
 }
 
-.academicSub {
-  font-size: 12px;
-  color: var(--text);
+.metaBadge {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.metaTitle {
   margin: 0;
-  opacity: 0.8;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.metaSubtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.metricItem {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metricLabel {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.metricValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.routeInstructions h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.routeInstructions p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.5;
+}
+
+/* Empty state styling */
+.emptyState {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+.emptyCard {
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  padding: 40px 24px;
+  background-color: #181818;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.emptyIcon {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 20px;
+  animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.emptyCard h2 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+
+.emptyCard p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Responsive layout shifts */
+@media (max-width: 1024px) {
+  .appLayout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    min-width: unset;
+    height: 380px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .mainContent {
+    height: calc(100vh - 380px);
+  }
 }

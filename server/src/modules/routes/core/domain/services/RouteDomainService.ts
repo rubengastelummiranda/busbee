@@ -46,6 +46,10 @@ export class RouteDomainService implements RouteService {
     return this.repository.findById(routeId);
   }
 
+  async findAllRoutes(): Promise<Route[]> {
+    return this.repository.findAll();
+  }
+
   async updateRoute(
     routeId: string,
     updateData: UpdateRouteDTO,

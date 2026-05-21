@@ -5,6 +5,7 @@ import { UpdateRouteDTO } from '../../dtos/UpdateRoute.dto';
 export interface RouteService {
   createRoute(routeData: CreateRouteDTO): Promise<Route>;
   getRouteById(routeId: string): Promise<Route | null>;
+  findAllRoutes(): Promise<Route[]>;
   updateRoute(routeId: string, updateData: UpdateRouteDTO): Promise<Route>;
   deleteRoute(routeId: string): Promise<void>;
 }
