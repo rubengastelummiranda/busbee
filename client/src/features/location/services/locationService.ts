@@ -20,6 +20,13 @@ export interface LocationServiceEvents {
 class LocationService {
   private socket: Socket | null = null;
   private listeners = new Set<LocationServiceEvents>();
+  private pendingReport: {
+    driverId: string;
+    routeId: string;
+    vehicleId: string;
+    lat: number;
+    lng: number;
+  } | null = null;
 
   subscribe(events: LocationServiceEvents): () => void {
     this.listeners.add(events);
@@ -59,6 +66,11 @@ class LocationService {
 
     this.socket.on('connect', () => {
       console.log('Connected to location WebSocket server');
+      if (this.pendingReport) {
+        console.log('Transmitting cached pending location report:', this.pendingReport);
+        this.socket?.emit('report-location', this.pendingReport);
+        this.pendingReport = null;
+      }
       this.listeners.forEach((l) => l.onConnect?.());
     });
 
@@ -84,6 +96,7 @@ class LocationService {
       console.log('Disconnecting from location WebSocket server...');
       this.socket.disconnect();
       this.socket = null;
+      this.pendingReport = null;
     }
   }
 
@@ -96,12 +109,15 @@ class LocationService {
   }) {
     if (this.socket && this.socket.connected) {
       this.socket.emit('report-location', data);
+      this.pendingReport = null;
     } else {
-      console.warn('Cannot report location: WebSocket socket not connected');
+      console.warn('Cannot report location immediately: WebSocket socket not connected. Caching for reconnection.');
+      this.pendingReport = data;
     }
   }
 
   goOffline(driverId: string) {
+    this.pendingReport = null;
     if (this.socket && this.socket.connected) {
       this.socket.emit('go-offline', { driverId });
     }

@@ -24,7 +24,7 @@ export const DriverDashboardPage: React.FC = () => {
   const [selectedRouteId, setSelectedRouteId] = useState<string>('');
   const [selectedVehicleId, setSelectedVehicleId] = useState<string>('');
   const [isOnline, setIsOnline] = useState(false);
-  const [watchId, setWatchId] = useState<number | null>(null);
+  const watchIdRef = React.useRef<number | null>(null);
   const [currentCoordinates, setCurrentCoordinates] = useState<{ lat: number; lng: number } | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [socketStatus, setSocketStatus] = useState<'connecting' | 'connected' | 'disconnected' | 'error'>('disconnected');
@@ -69,8 +69,8 @@ export const DriverDashboardPage: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      if (watchId !== null) {
-        navigator.geolocation.clearWatch(watchId);
+      if (watchIdRef.current !== null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
       }
       if (unsubscribeRef.current) {
         unsubscribeRef.current();
@@ -78,13 +78,13 @@ export const DriverDashboardPage: React.FC = () => {
       }
       locationService.disconnect();
     };
-  }, [watchId]);
+  }, []);
 
   const handleToggleOnline = () => {
     if (isOnline) {
-      if (watchId !== null) {
-        navigator.geolocation.clearWatch(watchId);
-        setWatchId(null);
+      if (watchIdRef.current !== null) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+        watchIdRef.current = null;
       }
       if (unsubscribeRef.current) {
         unsubscribeRef.current();
@@ -154,9 +154,9 @@ export const DriverDashboardPage: React.FC = () => {
 
           if (shouldDisconnect) {
             setIsOnline(false);
-            if (watchId !== null) {
-              navigator.geolocation.clearWatch(watchId);
-              setWatchId(null);
+            if (watchIdRef.current !== null) {
+              navigator.geolocation.clearWatch(watchIdRef.current);
+              watchIdRef.current = null;
             }
             if (unsubscribeRef.current) {
               unsubscribeRef.current();
@@ -173,7 +173,7 @@ export const DriverDashboardPage: React.FC = () => {
           timeout: 10000,
         }
       );
-      setWatchId(id);
+      watchIdRef.current = id;
       setIsOnline(true);
     }
   };
