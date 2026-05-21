@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Card from '../../../../ui/Card/Card';
 import Button from '../../../../ui/Button/Button';
 import type { Route } from '../../services/routesApi';
@@ -55,14 +55,17 @@ export const RouteList: React.FC<RouteListProps> = ({
     }
   };
 
-  const filteredRoutes = routes.filter((route) => {
-    const term = search.toLowerCase();
-    return (
-      route.name.toLowerCase().includes(term) ||
-      route.code.toLowerCase().includes(term) ||
-      (route.shortName && route.shortName.toLowerCase().includes(term))
-    );
-  });
+  const filteredRoutes = useMemo(() => {
+    const term = search.toLowerCase().trim();
+    if (!term) return routes;
+    return routes.filter((route) => {
+      return (
+        route.name.toLowerCase().includes(term) ||
+        route.code.toLowerCase().includes(term) ||
+        (route.shortName && route.shortName.toLowerCase().includes(term))
+      );
+    });
+  }, [routes, search]);
 
   return (
     <div className={styles.container}>
