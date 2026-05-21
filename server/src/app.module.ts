@@ -5,9 +5,18 @@ import { GlobalConfigModule } from './config/global.config.module';
 import { ConfigModule } from '@nestjs/config';
 import { RoutesModule } from './modules/routes/routes.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { LocationModule } from './modules/location/location.module';
 
 @Module({
-  imports: [TravelsModule,RoutesModule,  VehiclesModule, GlobalConfigModule,ConfigModule.forRoot({isGlobal:true}), AuthModule],
+  imports: [
+    TravelsModule,
+    RoutesModule,
+    VehiclesModule,
+    GlobalConfigModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    AuthModule,
+    LocationModule,
+  ],
   controllers: [],
   providers: [],
 })

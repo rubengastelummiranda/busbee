@@ -5,6 +5,8 @@ import { navigate } from 'mouter-router';
 import { routesApi } from '../../features/routes/services/routesApi';
 import type { Route } from '../../features/routes/services/routesApi';
 import PassengerRouteMap from '../../features/routes/components/PassengerRouteMap/PassengerRouteMap';
+import { locationService } from '../../features/location/services/locationService';
+import type { ActiveBus } from '../../features/location/services/locationService';
 import styles from './AppDashboardPage.module.css';
 
 export const AppDashboardPage: React.FC = () => {
@@ -14,6 +16,7 @@ export const AppDashboardPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeBuses, setActiveBuses] = useState<ActiveBus[]>([]);
 
   useEffect(() => {
     const fetchAllRoutes = async () => {
@@ -33,6 +36,16 @@ export const AppDashboardPage: React.FC = () => {
     };
 
     fetchAllRoutes();
+  }, []);
+
+  useEffect(() => {
+    locationService.connect((locations) => {
+      setActiveBuses(locations);
+    });
+
+    return () => {
+      locationService.disconnect();
+    };
   }, []);
 
   const handleLogout = () => {
@@ -87,6 +100,10 @@ export const AppDashboardPage: React.FC = () => {
               <h1 className={styles.logoText}>BusBee</h1>
               <p className={styles.logoTagline}>Consola de Pasajero</p>
             </div>
+          </div>
+          <div className={styles.liveBadge}>
+            <span className={styles.liveDot}></span>
+            <span>Seguimiento Activo</span>
           </div>
         </div>
 
@@ -179,7 +196,7 @@ export const AppDashboardPage: React.FC = () => {
         {selectedRoute ? (
           <div className={styles.detailsSplit}>
             <div className={styles.mapArea}>
-              <PassengerRouteMap route={selectedRoute} />
+              <PassengerRouteMap route={selectedRoute} activeBuses={activeBuses} />
             </div>
 
             <div className={styles.metaArea}>

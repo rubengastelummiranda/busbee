@@ -3,6 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { decodePolyline } from '../../hooks/useRoutes';
 import type { Route } from '../../services/routesApi';
+import type { ActiveBus } from '../../../location/services/locationService';
 import styles from './PassengerRouteMap.module.css';
 
 // Public access token for Mapbox GL
@@ -10,12 +11,14 @@ mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN || '';
 
 interface PassengerRouteMapProps {
   route: Route;
+  activeBuses?: ActiveBus[];
 }
 
-export const PassengerRouteMap: React.FC<PassengerRouteMapProps> = ({ route }) => {
+export const PassengerRouteMap: React.FC<PassengerRouteMapProps> = ({ route, activeBuses = [] }) => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markersRef = useRef<mapboxgl.Marker[]>([]);
+  const busMarkersRef = useRef<Map<string, mapboxgl.Marker>>(new Map());
   const [mapLoaded, setMapLoaded] = useState(false);
 
   // Decode coordinates, using route.coordinates first, then route.polyline as fallback
@@ -37,6 +40,80 @@ export const PassengerRouteMap: React.FC<PassengerRouteMapProps> = ({ route }) =
     }
     return route.polyline ? decodePolyline(route.polyline) : [];
   }, [route.coordinates, route.polyline]);
+
+  const currentRouteBuses = React.useMemo(() => {
+    return activeBuses.filter((bus) => bus.routeId === route.id);
+  }, [activeBuses, route.id]);
+
+  // Manage active bus markers on the map
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapLoaded) return;
+
+    const activeVehicleIds = new Set(currentRouteBuses.map((b) => b.vehicleId));
+
+    // Remove markers for buses that are no longer active on this route
+    busMarkersRef.current.forEach((marker, vehicleId) => {
+      if (!activeVehicleIds.has(vehicleId)) {
+        marker.remove();
+        busMarkersRef.current.delete(vehicleId);
+      }
+    });
+
+    // Create or update markers for active buses
+    currentRouteBuses.forEach((bus) => {
+      const existingMarker = busMarkersRef.current.get(bus.vehicleId);
+
+      if (existingMarker) {
+        // Update marker position
+        existingMarker.setLngLat([bus.lng, bus.lat]);
+        // Update popup content with new details
+        const popup = existingMarker.getPopup();
+        if (popup) {
+          popup.setHTML(`<div class="${styles.busPopupContent}">
+            <strong>Autobús Activo 🚌</strong>
+            <p>Unidad: ${bus.vehicleId}</p>
+            <p style="font-size: 10px; margin-top: 4px; opacity: 0.7;">Último reporte: ${new Date(bus.updatedAt).toLocaleTimeString()}</p>
+          </div>`);
+        }
+      } else {
+        // Create new marker DOM element
+        const markerEl = document.createElement('div');
+        markerEl.className = styles.busMarker;
+
+        const pulseDot = document.createElement('div');
+        pulseDot.className = styles.busPulseDot;
+        markerEl.appendChild(pulseDot);
+
+        const busIcon = document.createElement('span');
+        busIcon.className = styles.busIcon;
+        busIcon.innerText = '🚌';
+        markerEl.appendChild(busIcon);
+
+        const popup = new mapboxgl.Popup({ offset: 25, closeButton: false })
+          .setHTML(`<div class="${styles.busPopupContent}">
+            <strong>Autobús Activo 🚌</strong>
+            <p>Unidad: ${bus.vehicleId}</p>
+            <p style="font-size: 10px; margin-top: 4px; opacity: 0.7;">Último reporte: ${new Date(bus.updatedAt).toLocaleTimeString()}</p>
+          </div>`);
+
+        const newMarker = new mapboxgl.Marker({ element: markerEl })
+          .setLngLat([bus.lng, bus.lat])
+          .setPopup(popup)
+          .addTo(map);
+
+        busMarkersRef.current.set(bus.vehicleId, newMarker);
+      }
+    });
+  }, [currentRouteBuses, mapLoaded]);
+
+  // Clean up all bus markers on unmount
+  useEffect(() => {
+    return () => {
+      busMarkersRef.current.forEach((marker) => marker.remove());
+      busMarkersRef.current.clear();
+    };
+  }, []);
 
   // Initialize Mapbox GL map
   useEffect(() => {

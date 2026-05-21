@@ -21,6 +21,7 @@ export const useLogin = () => {
     try {
       const response = await authApi.login(email, password);
       if (response.success && response.user) {
+        localStorage.setItem('currentUser', JSON.stringify(response.user));
         // Redirigir según el tipo de usuario
         if (response.user.type === 'CONDUCTOR') {
           navigate('/driving');

@@ -7,22 +7,38 @@ import { vehiclesApi } from '../../features/vehicles/services/vehiclesApi';
 import type { Vehicle } from '../../features/vehicles/services/vehiclesApi';
 import { travelsApi } from '../../features/travels/services/travelsApi';
 import type { Travel } from '../../features/travels/services/travelsApi';
+import { routesApi } from '../../features/routes/services/routesApi';
+import type { Route } from '../../features/routes/services/routesApi';
+import { locationService } from '../../features/location/services/locationService';
 import styles from './DriverDashboardPage.module.css';
 
 export const DriverDashboardPage: React.FC = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [travels, setTravels] = useState<Travel[]>([]);
+  const [routes, setRoutes] = useState<Route[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Online location tracking states
+  const [driverId, setDriverId] = useState<string>('');
+  const [driverName, setDriverName] = useState<string>('');
+  const [selectedRouteId, setSelectedRouteId] = useState<string>('');
+  const [selectedVehicleId, setSelectedVehicleId] = useState<string>('');
+  const [isOnline, setIsOnline] = useState(false);
+  const [watchId, setWatchId] = useState<number | null>(null);
+  const [currentCoordinates, setCurrentCoordinates] = useState<{ lat: number; lng: number } | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
     const loadDashboardData = async () => {
       try {
-        const [vehiclesData, travelsData] = await Promise.all([
+        const [vehiclesData, travelsData, routesData] = await Promise.all([
           vehiclesApi.listVehicles().catch(() => []),
           travelsApi.listTravels().catch(() => []),
+          routesApi.listRoutes().catch(() => []),
         ]);
         setVehicles(vehiclesData);
         setTravels(travelsData);
+        setRoutes(routesData.filter((r) => r.status === 'ACTIVE'));
       } catch (err) {
         console.error('Error loading dashboard data', err);
       } finally {
@@ -31,6 +47,96 @@ export const DriverDashboardPage: React.FC = () => {
     };
     loadDashboardData();
   }, []);
+
+  useEffect(() => {
+    const userJson = localStorage.getItem('currentUser');
+    if (userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        setDriverId(user.id || 'driver-anonymous');
+        setDriverName(user.name || 'Conductor');
+      } catch (e) {
+        setDriverId('driver-' + Math.random().toString(36).substr(2, 9));
+        setDriverName('Conductor');
+      }
+    } else {
+      setDriverId('driver-' + Math.random().toString(36).substr(2, 9));
+      setDriverName('Conductor');
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+      }
+      locationService.disconnect();
+    };
+  }, [watchId]);
+
+  const handleToggleOnline = () => {
+    if (isOnline) {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        setWatchId(null);
+      }
+      locationService.goOffline(driverId);
+      locationService.disconnect();
+      setIsOnline(false);
+      setCurrentCoordinates(null);
+    } else {
+      if (!selectedRouteId || !selectedVehicleId) {
+        setErrorMsg('Por favor selecciona una ruta y un autobús antes de transmitir.');
+        return;
+      }
+      setErrorMsg(null);
+
+      if (!navigator.geolocation) {
+        setErrorMsg('La geolocalización no está soportada por tu navegador.');
+        return;
+      }
+
+      locationService.connect((locations) => {
+        console.log('Active locations in fleet:', locations);
+      });
+
+      const id = navigator.geolocation.watchPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentCoordinates({ lat: latitude, lng: longitude });
+          locationService.reportLocation({
+            driverId,
+            routeId: selectedRouteId,
+            vehicleId: selectedVehicleId,
+            lat: latitude,
+            lng: longitude,
+          });
+        },
+        (error) => {
+          console.error('Error getting location:', error);
+          let msg = 'Error al obtener la ubicación.';
+          if (error.code === error.PERMISSION_DENIED) {
+            msg = 'Permiso denegado para obtener la ubicación.';
+          }
+          setErrorMsg(msg);
+          setIsOnline(false);
+          if (watchId !== null) {
+            navigator.geolocation.clearWatch(watchId);
+            setWatchId(null);
+          }
+          locationService.goOffline(driverId);
+          locationService.disconnect();
+        },
+        {
+          enableHighAccuracy: true,
+          maximumAge: 0,
+          timeout: 10000,
+        }
+      );
+      setWatchId(id);
+      setIsOnline(true);
+    }
+  };
 
   const totalVehicles = vehicles.length;
   const totalTravels = travels.length;
@@ -63,6 +169,91 @@ export const DriverDashboardPage: React.FC = () => {
           </div>
           <span className={styles.beeIllustration}>🐝</span>
         </div>
+
+        {/* Online Tracker Panel */}
+        <Card className={styles.trackerPanel}>
+          <div className={styles.trackerHeader}>
+            <h2 className={styles.trackerTitle}>
+              📡 Transmisión en Tiempo Real
+            </h2>
+            <div className={`${styles.statusBadge} ${isOnline ? styles.online : styles.offline}`}>
+              {isOnline ? (
+                <>
+                  <span className={styles.trackerPulseDot}></span>
+                  En Línea
+                </>
+              ) : (
+                'Fuera de Línea'
+              )}
+            </div>
+          </div>
+
+          <div className={styles.trackerForm}>
+            <div className={styles.inputGroup}>
+              <label htmlFor="routeSelect">Seleccionar Ruta de Viaje</label>
+              <select
+                id="routeSelect"
+                className={styles.selectInput}
+                value={selectedRouteId}
+                onChange={(e) => setSelectedRouteId(e.target.value)}
+                disabled={isOnline}
+              >
+                <option value="">-- Elige una ruta activa --</option>
+                {routes.map((route) => (
+                  <option key={route.id} value={route.id}>
+                    {route.code} - {route.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.inputGroup}>
+              <label htmlFor="vehicleSelect">Asignar Autobús</label>
+              <select
+                id="vehicleSelect"
+                className={styles.selectInput}
+                value={selectedVehicleId}
+                onChange={(e) => setSelectedVehicleId(e.target.value)}
+                disabled={isOnline}
+              >
+                <option value="">-- Elige un autobús disponible --</option>
+                {vehicles.map((v) => (
+                  <option key={v.id} value={v.id}>
+                    {v.plateNumber} ({v.capacity} pax)
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              type="button"
+              className={`${styles.trackerBtn} ${isOnline ? styles.stop : styles.start}`}
+              onClick={handleToggleOnline}
+            >
+              {isOnline ? '📴 Detener Reporte' : '🛰️ Iniciar Reporte'}
+            </button>
+          </div>
+
+          {errorMsg && (
+            <div style={{ color: '#ef4444', fontSize: '13px', fontWeight: 600 }}>
+              ⚠️ {errorMsg}
+            </div>
+          )}
+
+          {isOnline && currentCoordinates && (
+            <div className={styles.trackerDetails}>
+              <span>
+                <strong>Conductor:</strong> {driverName}
+              </span>
+              <span>
+                <strong>Coordenadas:</strong> {currentCoordinates.lat.toFixed(6)}, {currentCoordinates.lng.toFixed(6)}
+              </span>
+              <span>
+                <strong>Estado:</strong> Reportando ubicación cada 10s
+              </span>
+            </div>
+          )}
+        </Card>
 
         {/* Stats Grid */}
         <div className={styles.statsGrid}>
